@@ -1,16 +1,19 @@
 require "board"
 
 describe Board do
-  let (:cell) { double(:cell, on?: true) }
-  let (:cell_class) { double(:cell_class, new: cell) }
+  describe "initialisation of cell_states" do
+    let (:cell_class) { double(:cell_class) }
 
-  it "is instantiated" do
-    expect { Board.new(cell_class)}.to_not raise_error
-  end
+    it "creates 9 initial cells" do
+      expect(cell_class).to receive(:new).exactly(9).times
+      described_class.new({}, cell_class)
+    end
 
-  describe "#cell_states" do
-    it "returns on/off for all the cells on the board" do
-      expect(Board.new(cell_class).cell_states[0]).to eq(false)
+    it "sets cell_states to on for passed indices" do
+      expect(cell_class).to receive(:new).exactly(1).times.with(true)
+      expect(cell_class).to receive(:new).exactly(8).times.with(false)
+
+      described_class.new({0 => true}, cell_class)
     end
   end
 end
