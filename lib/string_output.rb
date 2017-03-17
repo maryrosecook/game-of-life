@@ -1,6 +1,9 @@
 module StringOutput
   def self.to_string(board)
-    "#{cell_state_to_string(board.cell_states[0])}\n"
+    board.cell_states_by_line.map do |cell_states|
+      cell_strings = cell_states.map(&method(:cell_state_to_string))
+      "#{cell_strings.join}\n"
+    end.join
   end
 
   private

@@ -1,13 +1,12 @@
 require "string_output"
 
 describe StringOutput do
-  let(:board) { double(:board, cell_states: [true] ) }
+  let(:board) { double(:board,
+                       cell_states_by_line: [[true, true, true],
+                                             [true, true, true],
+                                             [true, true, true]] ) }
 
-  it "takes board with 1 on cell and returns O" do
-    expect(StringOutput.to_string(board)).to match("O")
-  end
-
-  it "takes board with 1 on cell and returns line with a O" do
-    expect(StringOutput.to_string(board)).to match("\n$")
+  it "takes board with all on cells and returns 3 rows of Os" do
+    expect(StringOutput.to_string(board)).to eq("OOO\nOOO\nOOO\n")
   end
 end
