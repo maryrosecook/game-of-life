@@ -1,8 +1,9 @@
 module StringOutput
   def self.to_string(board)
-    board.cell_states_by_line.map do |cell_states|
-      line_to_string(cell_states)
-    end.join
+    board
+      .cell_states_by_line
+      .map(&method(:line_to_string))
+      .join
   end
 
   private
