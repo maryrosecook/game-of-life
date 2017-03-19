@@ -22,10 +22,12 @@ describe Board do
     let (:cell_class) { double(:cell_class, new: cell) }
 
     it "returns on/off state of cells" do
-      cell_states = described_class.new({}, cell_class).cell_states
-      expect(cell_states).to eq([false, false, false,
-                                 false, false, false,
-                                 false, false, false])
+      cell_states_by_line =
+        described_class.new({}, cell_class).cell_states_by_line
+      expect(cell_states_by_line)
+        .to eq([[false, false, false],
+                [false, false, false],
+                [false, false, false]])
     end
   end
 

@@ -7,10 +7,6 @@ class Board
     end
   end
 
-  def cell_states
-    @cells.map(&:on?)
-  end
-
   def cell_states_by_line
     @cells.each_slice(SIZE).to_a.map do |line_cells|
       line_cells.map(&:on?)
