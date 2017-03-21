@@ -1,6 +1,7 @@
 describe "Features" do
   it "shows a board" do
-    expect(StringOutput.to_string(Board.new)).to eq("   \n   \n   \n")
+    expect(StringOutput.to_string(Board.new))
+      .to eq("   \n   \n   \n")
   end
 
   it "creates a board with some cells living" do
