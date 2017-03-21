@@ -1,25 +1,25 @@
 class Cell
-  def initialize(on = false)
-    @on = on
+  def initialize(living = false)
+    @living = living
   end
 
-  def on?
-    @on
+  def living?
+    @living
   end
 
   def duplicate
-    self.class.new(on=on?)
+    self.class.new(living=living?)
   end
 
   def step(neighbours)
-    if on_neighbour_count(neighbours) < 2
-      @on = false
+    if living_neighbour_count(neighbours) < 2
+      @living = false
     end
   end
 
   private
 
-  def on_neighbour_count(neighbours)
-    neighbours.count(&:on?)
+  def living_neighbour_count(neighbours)
+    neighbours.count(&:living?)
   end
 end
