@@ -3,16 +3,16 @@
 ### To do
 
 As a player
+So I can see a realistic game of life
+I want cells to live if they have two or three neighbours
+
+As a player
 So I can see the system change slowly
 I want to step the system forward one step
 
 As a player
 So I can see a realistic game of life
 I want cells to die if they have fewer than two neighbours
-
-As a player
-So I can see a realistic game of life
-I want cells to live if they have two or three neighbours
 
 As a player
 So I can see a realistic game of life
