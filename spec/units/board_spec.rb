@@ -30,17 +30,4 @@ describe Board do
                 [false, false, false]])
     end
   end
-
-  describe "cell_states_by_line" do
-    let (:cell) { double(:cell, on?: false) }
-    let (:cell_class) { double(:cell_class, new: cell) }
-
-    it "returns on/off state of cells, one array per line" do
-      described_class.new({}, cell_class)
-        .cell_states_by_line
-        .each do |line|
-        expect(line).to eq([false, false, false])
-      end
-    end
-  end
 end
