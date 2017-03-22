@@ -7,14 +7,14 @@ class Cell
     @living
   end
 
-  def duplicate
-    self.class.new(living=living?)
+  def cache_next_living(neighbours)
+    if living_neighbour_count(neighbours) < 2
+      @next_living = false
+    end
   end
 
-  def step(neighbours)
-    if living_neighbour_count(neighbours) < 2
-      @living = false
-    end
+  def set_next_living
+    @living = @next_living
   end
 
   private

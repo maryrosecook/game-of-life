@@ -21,28 +21,35 @@ describe Cell do
     end
   end
 
-  describe "#duplicate" do
-    it "cell that's living returns cell that's living" do
-      expect(Cell.new(living=true).duplicate).to be_living
-    end
-
-    it "cell that's off returns cell that's off" do
-      expect(Cell.new(living=false).duplicate).to_not be_living
-    end
-  end
-
-  describe "#step" do
+  describe "#cache_next_living" do
     let(:living_cell) { described_class.new(living=true) }
     let(:off_cell) { described_class.new(living=false) }
 
-    it "turns cell off if fewer than two living neighbours" do
+    it "doesn't change external state" do
       neighbours = [off_cell, off_cell, off_cell, off_cell,
                     off_cell, off_cell, off_cell, off_cell]
 
       cell = Cell.new(living=true)
       expect(cell).to be_living
 
-      cell.step(neighbours)
+      cell.cache_next_living(neighbours)
+      expect(cell).to be_living
+    end
+  end
+
+  describe "#cache_next_living and #set_next_living" do
+    let(:living_cell) { described_class.new(living=true) }
+    let(:off_cell) { described_class.new(living=false) }
+
+    it "caches next living state and fixes it" do
+      neighbours = [off_cell, off_cell, off_cell, off_cell,
+                    off_cell, off_cell, off_cell, off_cell]
+
+      cell = Cell.new(living=true)
+      expect(cell).to be_living
+
+      cell.cache_next_living(neighbours)
+      cell.set_next_living
       expect(cell).to_not be_living
     end
   end
