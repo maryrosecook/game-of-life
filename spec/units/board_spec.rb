@@ -17,7 +17,7 @@ describe Board do
     end
   end
 
-  describe "cell_states" do
+  describe "#cell_states_by_line" do
     let (:cell) { double(:cell, living?: false) }
     let (:cell_class) { double(:cell_class, new: cell) }
 
