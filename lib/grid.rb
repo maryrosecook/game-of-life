@@ -1,3 +1,5 @@
+require_relative "./cell"
+
 class Grid
   SIZE = 3
   NEIGHBOUR_OFFSETS = [[-1, -1], [0, -1], [1, -1],

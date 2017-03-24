@@ -8,13 +8,23 @@ class Cell
   end
 
   def cache_next_living(neighbours)
-    if living_neighbour_count(neighbours) < 2
+    living_neighbour_count = living_neighbour_count(neighbours)
+
+    if living? && living_neighbour_count < 2
       @next_living = false
+    elsif living? && living_neighbour_count.between?(2, 3)
+      @next_living = true
+    elsif living? && living_neighbour_count > 3
+      @next_living = false
+    elsif !living? && living_neighbour_count == 3
+      @next_living = true
     end
   end
 
   def set_next_living
-    @living = @next_living
+    if !@next_living.nil?
+      @living = @next_living
+    end
   end
 
   private

@@ -1,6 +1,9 @@
 require "cell"
 
 describe Cell do
+  let(:living_cell) { described_class.new(living=true) }
+  let(:dead_cell) { described_class.new(living=false) }
+
   describe "instantiation" do
     it "defaults living to false" do
       expect(subject).to_not be_living
@@ -22,12 +25,9 @@ describe Cell do
   end
 
   describe "#cache_next_living" do
-    let(:living_cell) { described_class.new(living=true) }
-    let(:off_cell) { described_class.new(living=false) }
-
     it "doesn't change external state" do
-      neighbours = [off_cell, off_cell, off_cell, off_cell,
-                    off_cell, off_cell, off_cell, off_cell]
+      neighbours = [dead_cell, dead_cell, dead_cell, dead_cell,
+                    dead_cell, dead_cell, dead_cell, dead_cell]
 
       cell = Cell.new(living=true)
       expect(cell).to be_living
@@ -38,12 +38,9 @@ describe Cell do
   end
 
   describe "#cache_next_living and #set_next_living" do
-    let(:living_cell) { described_class.new(living=true) }
-    let(:off_cell) { described_class.new(living=false) }
-
     it "caches next living state and fixes it" do
-      neighbours = [off_cell, off_cell, off_cell, off_cell,
-                    off_cell, off_cell, off_cell, off_cell]
+      neighbours = [dead_cell, dead_cell, dead_cell, dead_cell,
+                    dead_cell, dead_cell, dead_cell, dead_cell]
 
       cell = Cell.new(living=true)
       expect(cell).to be_living
@@ -51,6 +48,58 @@ describe Cell do
       cell.cache_next_living(neighbours)
       cell.set_next_living
       expect(cell).to_not be_living
+    end
+  end
+
+  describe "rules" do
+    it "dies if living and has < 2 living neighbours" do
+      neighbours = [dead_cell, dead_cell, dead_cell, dead_cell,
+                    dead_cell, dead_cell, dead_cell, dead_cell]
+
+      cell = Cell.new(living=true)
+      cell.cache_next_living(neighbours)
+      cell.set_next_living
+      expect(cell).to_not be_living
+    end
+
+    it "lives if living and has 2 living neighbours" do
+      neighbours = [living_cell, living_cell, dead_cell, dead_cell,
+                    dead_cell, dead_cell, dead_cell, dead_cell]
+
+      cell = Cell.new(living=true)
+      cell.cache_next_living(neighbours)
+      cell.set_next_living
+      expect(cell).to be_living
+    end
+
+    it "lives if living and has 3 living neighbours" do
+      neighbours = [living_cell, living_cell, living_cell, dead_cell,
+                    dead_cell, dead_cell, dead_cell, dead_cell]
+
+      cell = Cell.new(living=true)
+      cell.cache_next_living(neighbours)
+      cell.set_next_living
+      expect(cell).to be_living
+    end
+
+    it "die if living and has > 3 living neighbours" do
+      neighbours = [living_cell, living_cell, living_cell, living_cell,
+                    dead_cell, dead_cell, dead_cell, dead_cell]
+
+      cell = Cell.new(living=true)
+      cell.cache_next_living(neighbours)
+      cell.set_next_living
+      expect(cell).to_not be_living
+    end
+
+    it "comes alive if dead and has 3 living neighbours" do
+      neighbours = [living_cell, living_cell, living_cell, dead_cell,
+                    dead_cell, dead_cell, dead_cell, dead_cell]
+
+      cell = Cell.new(living=false)
+      cell.cache_next_living(neighbours)
+      cell.set_next_living
+      expect(cell).to be_living
     end
   end
 end
