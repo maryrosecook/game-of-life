@@ -31,6 +31,18 @@ describe Board do
     end
   end
 
+  describe "#step" do
+    let (:cell) { double(:cell, living?: false) }
+    let (:cell_class) { double(:cell_class, new: cell) }
+
+    it "tells every cell to cache_next_living and set_next_living" do
+      board = described_class.new({}, cell_class)
+      expect(cell).to receive(:cache_next_living).exactly(9).times
+      expect(cell).to receive(:set_next_living).exactly(9).times
+      board.step
+    end
+  end
+
   describe "#neighbours" do
     let(:zero) { double(:zero_cell) }
     let(:one) { double(:one_cell) }

@@ -16,6 +16,12 @@ class Board
     end
   end
 
+  def step
+    @cells
+      .each(&:cache_next_living)
+      .each(&:set_next_living)
+  end
+
   def neighbours(cell_index)
     hash_lines = to_h(lines.map(&method(:to_h)))
     row = cell_index / SIZE
