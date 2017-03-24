@@ -1,4 +1,4 @@
-class Board
+class Grid
   SIZE = 3
   NEIGHBOUR_OFFSETS = [[-1, -1], [0, -1], [1, -1],
                        [-1, 0], [1, 0],
@@ -8,18 +8,6 @@ class Board
     @cells = 9.times.map do |i|
       cell_class.new(!!living_cell_indices[i])
     end
-  end
-
-  def cell_states_by_line
-    lines.map do |line_cells|
-      line_cells.map(&:living?)
-    end
-  end
-
-  def step
-    @cells
-      .each(&:cache_next_living)
-      .each(&:set_next_living)
   end
 
   def neighbours(cell_index)
@@ -32,13 +20,13 @@ class Board
     end.compact
   end
 
+  def lines
+    @cells.each_slice(SIZE).to_a
+  end
+
   private
 
   def to_h(array)
     Hash[(0...array.size).zip(array)]
-  end
-
-  def lines
-    @cells.each_slice(SIZE).to_a
   end
 end
